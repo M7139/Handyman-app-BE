@@ -15,6 +15,13 @@ const app = express()
 
 // Database Configuration
 const db = require('./db')
+app.use(cors())
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Headers", "*")
+  res.header("Access-Control-Allow-Methods", "*")
+  next()
+})
 
 // set Port Configuration
 const port = process.env.PORT ? process.env.PORT : 3000
