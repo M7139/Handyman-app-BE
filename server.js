@@ -15,13 +15,6 @@ const app = express()
 
 // Database Configuration
 const db = require('./db')
-app.use(cors())
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*")
-  res.header("Access-Control-Allow-Headers", "*")
-  res.header("Access-Control-Allow-Methods", "*")
-  next()
-})
 
 // set Port Configuration
 const port = process.env.PORT ? process.env.PORT : 3000
@@ -32,11 +25,17 @@ const logger = require('morgan')
 // Require passUserToView & isSignedIn middlewares
 
 // use MiddleWares
+app.use(express.json())
+app.use(cors())
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Headers", "*")
+  res.header("Access-Control-Allow-Methods", "*")
+  next()
+})
 app.use(express.urlencoded({ extended: true }))
 app.use(logger('dev'))
 app.use(express.static(path.join(__dirname, 'public')))
-app.use(cors())
-app.use(express.json())
 
 // Root Route
 app.get('/', (req, res) => {
